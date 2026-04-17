@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SmartEvent AI Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="mapCanvas"></canvas>
+
+<div class="container">
+  <h1>🚀 SmartEvent AI Pro</h1>
+  <p class="subtitle">Real-Time Crowd Intelligence Dashboard</p>
+
+  <div class="clock" id="clock"></div>
+
+  <div class="card">
+    <label>Select Location</label>
+    <select id="location">
+      <option>Gate A</option>
+      <option>Gate B</option>
+      <option>Food Court</option>
+      <option>Main Stage</option>
+    </select>
+
+    <button onclick="analyze()">Analyze Crowd</button>
+  </div>
+
+  <div id="output" class="output"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
