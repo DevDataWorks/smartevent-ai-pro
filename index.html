@@ -1,40 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>SmartEvent AI Ultra</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<canvas id="mapCanvas"></canvas>
+<header class="topbar">
+  <h2>🌍 SmartEvent AI Ultra</h2>
+  <div>
+    <button id="geoBtn">📍 My Location</button>
+    <button id="themeToggle">🌗 Theme</button>
+  </div>
+</header>
 
-<div class="container">
-  <h1>🚀 SmartEvent AI Ultra</h1>
-  <p>AI-powered Crowd Intelligence System</p>
+<main class="container">
 
-  <!-- Google Map -->
-  <iframe 
-    src="https://maps.google.com/maps?q=stadium&t=&z=13&ie=UTF8&iwloc=&output=embed"
-    width="90%" height="220">
-  </iframe>
+  <!-- SEARCH -->
+  <label for="search">Search place</label>
+  <input id="search" placeholder="Search any city or place..." autocomplete="off">
+  <div id="suggestions" role="listbox"></div>
 
-  <div class="card">
-    <label for="location">Select Location</label>
-    <select id="location" aria-label="Location Selector">
-      <option>Gate A</option>
-      <option>Gate B</option>
-      <option>Food Court</option>
-      <option>Main Stage</option>
-    </select>
-
-    <button onclick="analyze()" aria-label="Analyze crowd">
-      Analyze Crowd
-    </button>
+  <!-- FAVORITES -->
+  <div class="fav-bar">
+    <button id="saveFav">⭐ Save</button>
+    <select id="favList" aria-label="Favorites"></select>
   </div>
 
-  <div id="output"></div>
-</div>
+  <!-- MAP -->
+  <div class="map-box">
+    <iframe id="mapFrame"></iframe>
+    <canvas id="mapCanvas"></canvas>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="analyzeBtn">Analyze</button>
+    <button id="voiceBtn">🎤 Voice</button>
+    <button id="autoBtn">⏱️ Auto: OFF</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+
+  <!-- OUTPUT -->
+  <section id="output" aria-live="polite"></section>
+
+  <!-- CHART -->
+  <canvas id="chart"></canvas>
+
+</main>
 
 <script src="script.js"></script>
 </body>
