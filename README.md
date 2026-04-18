@@ -21,7 +21,7 @@ SmartEvent AI Pro is an intelligent assistant that simulates real-time crowd ana
 HTML, CSS, JavaScript
 
 ## 🌐 Live Demo
-(Add your deployed link)
+https://smartevent-ai-pro.vercel.app/
 
 ## 📌 Future Scope
 - Integration with Google Maps API
