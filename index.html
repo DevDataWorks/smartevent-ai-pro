@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SmartEvent AI Pro</title>
+  <meta charset="UTF-8">
+  <title>SmartEvent AI Ultra</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -9,24 +10,30 @@
 <canvas id="mapCanvas"></canvas>
 
 <div class="container">
-  <h1>🚀 SmartEvent AI Pro</h1>
-  <p class="subtitle">Real-Time Crowd Intelligence Dashboard</p>
+  <h1>🚀 SmartEvent AI Ultra</h1>
+  <p>AI-powered Crowd Intelligence System</p>
 
-  <div class="clock" id="clock"></div>
+  <!-- Google Map -->
+  <iframe 
+    src="https://maps.google.com/maps?q=stadium&t=&z=13&ie=UTF8&iwloc=&output=embed"
+    width="90%" height="220">
+  </iframe>
 
   <div class="card">
-    <label>Select Location</label>
-    <select id="location">
+    <label for="location">Select Location</label>
+    <select id="location" aria-label="Location Selector">
       <option>Gate A</option>
       <option>Gate B</option>
       <option>Food Court</option>
       <option>Main Stage</option>
     </select>
 
-    <button onclick="analyze()">Analyze Crowd</button>
+    <button onclick="analyze()" aria-label="Analyze crowd">
+      Analyze Crowd
+    </button>
   </div>
 
-  <div id="output" class="output"></div>
+  <div id="output"></div>
 </div>
 
 <script src="script.js"></script>

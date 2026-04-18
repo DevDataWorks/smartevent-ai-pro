@@ -1,67 +1,61 @@
-// ---------------- CLOCK ----------------
-function updateClock() {
-  const now = new Date();
-  document.getElementById("clock").innerText =
-    "⏱️ " + now.toLocaleTimeString();
-}
-setInterval(updateClock, 1000);
+"use strict";
 
-// ---------------- AI ANALYSIS ----------------
+/* ---------- DATA MODEL ---------- */
+const crowdBase = {
+  "Gate A": 70,
+  "Gate B": 40,
+  "Food Court": 85,
+  "Main Stage": 60
+};
+
+/* ---------- CROWD ENGINE ---------- */
+function generateCrowd(location) {
+  return crowdBase[location] + Math.floor(Math.random() * 20 - 10);
+}
+
+/* ---------- AI DECISION ENGINE ---------- */
 function analyze() {
   const location = document.getElementById("location").value;
+  const crowd = generateCrowd(location);
 
-  const crowd = Math.floor(Math.random() * 100);
-
-  let risk = "";
-  let color = "";
-  let alert = "";
-  let eta = "";
+  let risk, message;
 
   if (crowd > 80) {
-    risk = "HIGH RISK 🚨";
-    color = "red";
-    alert = "Avoid immediately!";
-    eta = "15-20 mins delay";
+    risk = "HIGH 🚨";
+    message = "Avoid area immediately";
   } else if (crowd > 60) {
     risk = "MEDIUM ⚠️";
-    color = "orange";
-    alert = "Use alternate path";
-    eta = "10 mins delay";
+    message = "Use alternate route";
   } else if (crowd > 40) {
     risk = "LOW 🙂";
-    color = "yellow";
-    alert = "Normal flow";
-    eta = "5 mins delay";
+    message = "Moderate flow";
   } else {
     risk = "SAFE ✅";
-    color = "lightgreen";
-    alert = "No delay";
-    eta = "Instant access";
+    message = "Smooth movement";
   }
 
   const routes = {
     "Gate A": "Gate B",
     "Gate B": "Gate A",
-    "Food Court": "Main Stage",
-    "Main Stage": "Gate A"
+    "Food Court": "Gate A",
+    "Main Stage": "Gate B"
   };
 
   const altRoute = routes[location];
 
-  document.getElementById("output").innerHTML = `
-    <h3>📊 AI REPORT</h3>
-    <p><b>📍 Location:</b> ${location}</p>
-    <p><b>👥 Crowd:</b> ${crowd}%</p>
-    <p><b style="color:${color}">⚠️ Risk:</b> ${risk}</p>
-    <p><b>🔀 Route:</b> ${altRoute}</p>
-    <p><b>⏳ ETA:</b> ${eta}</p>
-    <p><b>📢 Alert:</b> ${alert}</p>
-  `;
+  const aiInsight = `Based on crowd level ${crowd}%, AI recommends moving via ${altRoute}.`;
 
-  drawPulse();
+  document.getElementById("output").innerHTML = `
+    <h3>AI REPORT</h3>
+    <p>Location: ${location}</p>
+    <p>Crowd: ${crowd}%</p>
+    <p>Risk: ${risk}</p>
+    <p>Route: ${altRoute}</p>
+    <p>AI Insight: ${aiInsight}</p>
+  `;
 }
 
-// ---------------- CANVAS CROWD ----------------
+/* ---------- CANVAS SIMULATION ---------- */
 const canvas = document.getElementById("mapCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -70,28 +64,28 @@ canvas.height = window.innerHeight;
 
 let dots = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 80; i++) {
   dots.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    dx: (Math.random() - 0.5) * 1.5,
-    dy: (Math.random() - 0.5) * 1.5
+    dx: Math.random() - 0.5,
+    dy: Math.random() - 0.5
   });
 }
 
 function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  dots.forEach(dot => {
-    dot.x += dot.dx;
-    dot.y += dot.dy;
+  dots.forEach(d => {
+    d.x += d.dx;
+    d.y += d.dy;
 
-    if (dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
-    if (dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+    if (d.x<0 || d.x>canvas.width) d.dx*=-1;
+    if (d.y<0 || d.y>canvas.height) d.dy*=-1;
 
     ctx.beginPath();
-    ctx.arc(dot.x, dot.y, 2, 0, Math.PI * 2);
-    ctx.fillStyle = "cyan";
+    ctx.arc(d.x,d.y,2,0,Math.PI*2);
+    ctx.fillStyle="cyan";
     ctx.fill();
   });
 
@@ -99,15 +93,3 @@ function animate() {
 }
 
 animate();
-
-// ---------------- PULSE ----------------
-function drawPulse() {
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height;
-
-  ctx.beginPath();
-  ctx.arc(x, y, 25, 0, Math.PI * 2);
-  ctx.strokeStyle = "yellow";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-}
